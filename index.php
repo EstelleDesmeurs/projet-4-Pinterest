@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="assets/Pinterest_Favicon.png"> 
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
     <title>Projet 4</title>
 </head>
 <body>
@@ -19,6 +21,7 @@
 <?php
 $target_dir = "storage/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$fileName = ($_FILES["fileToUpload"]["name"]);    
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 // Check file size
@@ -33,41 +36,64 @@ if (isset($_POST['submit']) ) {
         echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
     }
-
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
         echo "Sorry, your file was not uploaded.";
+    }
     // if everything is ok, try to upload file
-    } else {
+    else {/*
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
             echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
         } else {
             echo "Sorry, there was an error uploading your file.";
-        }
+        }*/
     }
 }
+
 ?>
-    <section>
-        <?php     
-        $scan = scandir('storage/');
-        $description = $_POST['description'];
-        //print_r($description);
-        foreach($scan as $file) {
-            if (!is_dir($file)) {
-                echo  
-            "<figure>    
-                <img src='storage/".$file."'>
-                    <figcaption>".$description."</figcaption>
-            </figure>";    
+    <section> 
+       <figure>        
+           <div class="grid" data-isotope='{ "itemSelector": ".grid-item", "masonry": { "columnWidth": 20 } }'>
+            <?php     
+            $scan = scandir('storage/');
+            $description = $_POST['description'];
+            //print_r($description);
+            foreach($scan as $file) {
+                if (!is_dir($file)) {
+                    echo  
+                "<div class='grid-item'>
+                        <img src='storage/".$file."'>
+                </div>";    
+                }
             }
-        }
-        ?>
+            ?>
+            </div>
+        </figure>
     </section>
-    <!--<div class="grid"
-  data-isotope='{ "itemSelector": ".grid-item", "masonry": { "columnWidth": 200 } }'>
-  <div class="grid-item"></div>
-  <div class="grid-item"></div>
-  ...
-</div>-->
+<?php    
+    require 'simpleimage/src/claviska/SimpleImage.php';
+
+try {
+  // Create a new SimpleImage object
+  $image = new \claviska\SimpleImage();
+
+  // Magic! ✨
+  $image
+    ->fromFile($target_file)                     // load image.jpg
+    ->resize(320, 200)                          // resize to 320x200 pixels
+    ->toFile('simpleimage/src/claviska/newImage.png', 'image/png');      // convert to PNG and save a copy to new-image.png
+    
+  // And much more! 💪
+} catch(Exception $err) {
+  // Handle errors
+  echo $err->getMessage();
+}    
+  
+    // 1. 'fromFileTarget' doit prendre chaque upload différent et le mettre dans le dossier claviska.
+    // 2. les miniatures sstockées dans le dossier claviska doivent apparaître sur le site (et pas le simages à taille normales.).
+    // 3. quand l'utilisateur clique sur une des images miniatures, celle-ci s'affiche à taille normale.
+    
+    
+?>    
 </body>
 </html>

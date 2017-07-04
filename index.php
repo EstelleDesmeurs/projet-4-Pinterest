@@ -4,9 +4,10 @@ require 'src/claviska/SimpleImage.php';
 
 $imageFileType = pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION);
 
+
     if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
     && $imageFileType != "gif" ) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        echo "'<p><em>Only JPG, JPEG, PNG & GIF files are allowed.</em></p>";
     }
     elseif ($_FILES['fileToUpload']['size'] > 0) {
          move_uploaded_file($_FILES['fileToUpload']['tmp_name'], './images/'.$_FILES['fileToUpload']['name']);
@@ -42,16 +43,26 @@ unset($lecteur[0], $lecteur[1]);
     <title>Projet 4</title>
 </head>
 <body>
-    <form method="post" action="" enctype="multipart/form-data">
-       <h1>Choisissez votre image</h1>
-        <!--<label for="titre">Titre du fichier (max. 50 caractères) :</label><br/>
-        <input type="text" name="titre" value="Titre du fichier" id="titre" /><br />
-        <input type="hidden" name="MAX_FILE_SIZE" value="500000">-->
-        <input type="file" name="fileToUpload" id="fileToUpload"><br/>
-        <!--<label for="description">Description de votre fichier (max. 255 caractères) :</label><br/>
-        <textarea name="description" id="description"></textarea><br/>-->
-        <input type="submit" name="submit">
-    </form>
+    <div class="parallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" action="" enctype="multipart/form-data">
+
+                   <h1>Choisissez votre image</h1>
+                    <!--<label for="titre">Titre du fichier (max. 50 caractères) :</label><br/>
+                    <input type="text" name="titre" value="Titre du fichier" id="titre" /><br />
+                    <input type="hidden" name="MAX_FILE_SIZE" value="500000">-->
+                    <label class="btn btn-primary" for="fileToUpload">Choisir un fichier</label><input type="file" name="fileToUpload" id="fileToUpload">
+                    <!--<label for="description">Description de votre fichier (max. 255 caractères) :</label><br/>
+                    <textarea name="description" id="description"></textarea><br/>-->
+                    <input type="submit" class="btn btn-primary" name="submit">
+
+                </form>
+            </div>    
+        </div>
+        </div>        
+    
     <div class="remodal-bg">
         <!--<div class="remodal" data-remodal-id="modal">
           <button data-remodal-action="close" class="remodal-close"></button>
@@ -74,7 +85,7 @@ unset($lecteur[0], $lecteur[1]);
                 <div class="remodal" data-remodal-id="'.$value.'" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                 <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button> 
                 <div>
-                    <h2 id="modal1Title">Remodal</h2>
+                    <!--<h2 id="modal1Title"></h2>-->
                     <p id="modal1Desc"><img src="./images/'.$value.'" ></p>
                   </div>
                   <br>
@@ -86,6 +97,7 @@ unset($lecteur[0], $lecteur[1]);
             ?>
         </div>
 </div>
+</div>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="Remodal-1.1.1/dist/remodal.js"></script>
     <script src="Remodal-1.1.1/dist/remodal.min.js"></script>
@@ -96,7 +108,8 @@ unset($lecteur[0], $lecteur[1]);
         itemSelector: '.grid-item',
         percentPosition: true,
         masonry: {
-          columnWidth: '.grid-sizer'
+          columnWidth: '.grid-sizer',
+          gutter: 10
             }
           });
     });

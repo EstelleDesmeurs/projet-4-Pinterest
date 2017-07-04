@@ -89,7 +89,18 @@ unset($lecteur[0], $lecteur[1]);
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="Remodal-1.1.1/dist/remodal.js"></script>
     <script src="Remodal-1.1.1/dist/remodal.min.js"></script>
-        
+    <script src="node_modules/imagesloaded/imagesloaded.pkgd.js"></script>
+    <script type="text/javascript">
+    var $grid = $('.grid').imagesLoaded( function() {
+    $grid.isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        masonry: {
+          columnWidth: '.grid-sizer'
+            }
+          });
+    });
+    </script>     
 </body>
 </html>
 
